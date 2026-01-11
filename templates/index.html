@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Suspicious IP Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Suspicious IP Tracker</h1>
+
+    <form method="POST">
+        <input type="text" name="ips" placeholder="8.8.8.8, 1.1.1.1" required>
+        <button type="submit">Check IP</button>
+    </form>
+
+    {% if results %}
+    <table>
+        <tr>
+            <th>IP</th>
+            <th>Abuse Score</th>
+            <th>Malicious</th>
+            <th>Country</th>
+            <th>Usage</th>
+        </tr>
+
+        {% for r in results %}
+        <tr>
+            <td>{{ r.ip }}</td>
+            <td>{{ r.abuseScore }}</td>
+            <td class="{{ 'yes' if r.isMalicious == 'Yes' else 'no' }}">
+                {{ r.isMalicious }}
+            </td>
+            <td>{{ r.country }}</td>
+            <td>{{ r.usage }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
